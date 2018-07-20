@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainScreen">
+
+
+    <TextView
+        android:id="@+id/main_topBar"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:background="@color/colorPrimaryDark"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/main_logo"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="@+id/main_topBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/main_topBar"
+        app:srcCompat="@drawable/ic_twitter_logo_silhouette" />
+
+    <TextView
+        android:id="@+id/main_bottomBar"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:background="@color/colorPrimaryDark"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageButton
+        android:id="@+id/main_profile"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginStart="32dp"
+        android:background="@android:color/transparent"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="@+id/main_bottomBar"
+        app:layout_constraintStart_toEndOf="@+id/main_notification"
+        app:layout_constraintTop_toTopOf="@+id/main_bottomBar"
+        app:srcCompat="@drawable/ic_face_black_24dp" />
+
+    <ImageButton
+        android:id="@+id/main_notification"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginStart="32dp"
+        android:background="@android:color/transparent"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="@+id/main_bottomBar"
+        app:layout_constraintStart_toEndOf="@+id/main_category"
+        app:layout_constraintTop_toTopOf="@+id/main_bottomBar"
+        app:srcCompat="@drawable/ic_notifications_black_24dp" />
+
+    <ImageButton
+        android:id="@+id/main_category"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:background="@android:color/transparent"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="@+id/main_bottomBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/main_bottomBar"
+        app:srcCompat="@drawable/ic_add_circle_black_24dp" />
+
+    <ImageButton
+        android:id="@+id/main_search"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginRight="32dp"
+        android:background="@android:color/transparent"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="@+id/main_bottomBar"
+        app:layout_constraintEnd_toStartOf="@+id/main_category"
+        app:layout_constraintTop_toTopOf="@+id/main_bottomBar"
+        app:srcCompat="@drawable/ic_search_black_24dp" />
+
+    <ImageButton
+        android:id="@+id/main_home"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginRight="32dp"
+        android:background="@android:color/transparent"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="@+id/main_bottomBar"
+        app:layout_constraintEnd_toStartOf="@+id/main_search"
+        app:layout_constraintTop_toTopOf="@+id/main_bottomBar"
+        app:srcCompat="@drawable/ic_home_black_24dp" />
+
+    <ListView
+        android:id="@+id/main_list"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/main_bottomBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/main_topBar" />
+</android.support.constraint.ConstraintLayout>

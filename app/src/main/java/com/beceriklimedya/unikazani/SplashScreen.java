@@ -20,12 +20,14 @@ public class SplashScreen extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(SplashScreen.this,Register.class));
+                overridePendingTransition(R.anim.ileri1,R.anim.ileri2);
             }});
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(SplashScreen.this,Login.class));
+                overridePendingTransition(R.anim.ileri1,R.anim.ileri2);
             }});
     }
 }

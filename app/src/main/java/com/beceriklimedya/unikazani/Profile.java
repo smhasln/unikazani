@@ -1,18 +1,18 @@
 package com.beceriklimedya.unikazani;
 
-import android.content.Intent;
-import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 
-import com.beceriklimedya.unikazani.CustomAdapter.MainAdapter;
+import com.beceriklimedya.unikazani.CustomAdapter.ProfileListAdapter;
 
 import java.util.ArrayList;
 
-public class MainScreen extends AppCompatActivity {
+public class Profile extends AppCompatActivity {
 
     private ArrayList<String> MainArrayName = new ArrayList<>();
     private ArrayList<String> MainArrayCategory = new ArrayList<>();
@@ -23,52 +23,42 @@ public class MainScreen extends AppCompatActivity {
     private ArrayList<String> MainArrayLike = new ArrayList<>();
     private ArrayList<String> MainArrayHashTag = new ArrayList<>();
 
-    private ImageButton btnHome;
-    private ImageButton btnAdd;
-    private ImageButton btnSearch;
-    private ImageButton btnNotification;
-    private ImageButton btnProfile;
+    private ImageButton profileChat;
+    private ImageView profilePhoto;
+    private TextView profileShare;
+    private TextView profileScore;
+    private TextView profileAge;
+    private TextView profileUni;
+    private TextView profileName;
+    private ImageButton profileSettings;
+    private ImageButton profileBack;
 
-    private ListView main_list;
+    private ListView profileList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main_screen);
+        setContentView(R.layout.activity_profile);
 
-        main_list = findViewById(R.id.main_list);
+        profileChat = findViewById(R.id.profile_chat);
+        profilePhoto = findViewById(R.id.profile_photo);
+        profileShare = findViewById(R.id.profile_shares);
+        profileScore = findViewById(R.id.profile_score);
+        profileAge = findViewById(R.id.profile_age);
+        profileUni = findViewById(R.id.profile_university);
+        profileName = findViewById(R.id.profile_name);
+        profileSettings = findViewById(R.id.profile_settings);
+        profileBack = findViewById(R.id.profile_back);
+        profileList = findViewById(R.id.profile_list);
 
-        btnHome = findViewById(R.id.main_home);
-        btnAdd = findViewById(R.id.main_add);
-        btnSearch = findViewById(R.id.main_search);
-        btnNotification = findViewById(R.id.main_notification);
-        btnProfile = findViewById(R.id.main_profile);
+        profileBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Profile.super.onBackPressed();
+                overridePendingTransition(R.anim.geri1,R.anim.geri2);
+            }
+        });
 
         fill();
-
-        btnNotification.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MainScreen.this,Notifications.class));
-                overridePendingTransition(R.anim.ileri1,R.anim.ileri2);
-            }
-        });
-
-        btnSearch.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MainScreen.this,Search.class));
-                overridePendingTransition(R.anim.ileri1,R.anim.ileri2);
-            }
-        });
-
-        btnProfile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MainScreen.this,Profile.class));
-                overridePendingTransition(R.anim.ileri1,R.anim.ileri2);
-
-            }
-        });
 
     }
 
@@ -104,8 +94,7 @@ public class MainScreen extends AppCompatActivity {
         MainArrayTime.add("14:40");
         MainArrayTime.add("14:40");
 
-
-        main_list.setAdapter(new MainAdapter(MainScreen.this,
+        profileList.setAdapter(new ProfileListAdapter(Profile.this,
                 MainArrayName,
                 MainArrayCategory,
                 MainArrayTime,
@@ -113,5 +102,12 @@ public class MainScreen extends AppCompatActivity {
                 MainArrayImage,
                 MainArrayProfile,
                 MainArrayLike,MainArrayHashTag));
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(R.anim.geri1,R.anim.geri2);
     }
 }

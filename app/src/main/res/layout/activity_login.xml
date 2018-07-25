@@ -73,7 +73,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:background="@drawable/corner"
+        android:background="@drawable/corner_1"
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
         android:text="Oturum aç"

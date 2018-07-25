@@ -122,7 +122,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:background="@drawable/corner"
+        android:background="@drawable/corner_1"
         android:text="TAMAMLA"
         android:textColor="@android:color/white"
         app:layout_constraintEnd_toEndOf="@+id/floatLabeledEditText6"

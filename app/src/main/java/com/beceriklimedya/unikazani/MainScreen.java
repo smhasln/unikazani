@@ -1,12 +1,19 @@
 package com.beceriklimedya.unikazani;
 
+import android.app.Dialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.preference.PreferenceManager;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.beceriklimedya.unikazani.CustomAdapter.MainAdapter;
 
@@ -30,12 +37,19 @@ public class MainScreen extends AppCompatActivity {
     private ImageButton btnProfile;
 
     private ListView main_list;
+
+    private Dialog myDialog;
+    private String userId;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_screen);
 
-        main_list = findViewById(R.id.main_list);
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        userId = preferences.getString("userId", "N/A");
+
+        myDialog = new Dialog(this);
+        main_list = findViewById(R.id.mainlist);
 
         btnHome = findViewById(R.id.main_home);
         btnAdd = findViewById(R.id.main_add);
@@ -44,6 +58,22 @@ public class MainScreen extends AppCompatActivity {
         btnProfile = findViewById(R.id.main_profile);
 
         fill();
+
+        main_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                startActivity(new Intent(MainScreen.this,Comment.class));
+            }
+        });
+
+        btnAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainScreen.this,Add.class));
+                overridePendingTransition(R.anim.ileri1,R.anim.ileri2);
+            }
+        });
 
         btnNotification.setOnClickListener(new View.OnClickListener() {
             @Override

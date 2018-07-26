@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingBottom="10dp">
+    android:paddingBottom="15dp">
 
     <TextView
         android:id="@+id/notificationTitle"
@@ -14,7 +14,7 @@
         android:layout_marginLeft="16dp"
         android:layout_marginRight="8dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:text="Ahmet Gürgen fotoğrafını beğendi!"
         android:textColor="@color/cardview_dark_background"
         android:textSize="14sp"
@@ -40,7 +40,7 @@
         android:layout_height="40dp"
         android:layout_marginLeft="16dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="16dp"
         android:background="@drawable/yuvarlak3"
         android:padding="5dp"
         android:scaleType="fitCenter"

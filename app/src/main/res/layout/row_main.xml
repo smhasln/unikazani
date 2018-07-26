@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingBottom="10dp">
+    android:paddingBottom="15dp"
+    android:descendantFocusability="blocksDescendants">
 
     <TextView
         android:id="@+id/feed_item_name"
@@ -89,19 +90,6 @@
         app:layout_constraintEnd_toStartOf="@+id/feed_item_like_count"
         app:layout_constraintTop_toBottomOf="@+id/feed_item_image"
         app:srcCompat="@drawable/ic_favorite_black_24dp" />
-
-    <ImageButton
-        android:id="@+id/feed_item_comment"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:background="@android:color/transparent"
-        android:padding="5dp"
-        android:scaleType="centerInside"
-        android:tint="@color/colorPrimaryDark"
-        app:layout_constraintEnd_toStartOf="@+id/feed_item_like"
-        app:layout_constraintTop_toBottomOf="@+id/feed_item_image"
-        app:srcCompat="@drawable/ic_mode_comment_black_24dp" />
 
     <ImageView
         android:id="@+id/feed_item_profile"

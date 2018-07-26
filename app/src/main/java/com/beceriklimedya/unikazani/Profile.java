@@ -1,5 +1,6 @@
 package com.beceriklimedya.unikazani;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -49,6 +50,15 @@ public class Profile extends AppCompatActivity {
         profileSettings = findViewById(R.id.profile_settings);
         profileBack = findViewById(R.id.profile_back);
         profileList = findViewById(R.id.profile_list);
+
+        profileSettings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Profile.this,ProfileSettings.class));
+                overridePendingTransition(R.anim.ileri1,R.anim.ileri2);
+            }
+        });
+
 
         profileBack.setOnClickListener(new View.OnClickListener() {
             @Override

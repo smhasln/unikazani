@@ -89,14 +89,6 @@
         app:layout_constraintTop_toTopOf="@+id/main_bottomBar"
         app:srcCompat="@drawable/ic_home_black_24dp" />
 
-    <ListView
-        android:id="@+id/main_list"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/main_bottomBar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/main_topBar" />
 
     <ImageButton
         android:id="@+id/imageButton2"
@@ -104,11 +96,13 @@
         android:layout_height="35dp"
         android:layout_marginLeft="16dp"
         android:layout_marginStart="16dp"
-        android:background="@drawable/yuvarlak3"
-        app:layout_constraintBottom_toTopOf="@+id/main_list"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/yuvarlak2"
+        android:padding="7dp"
+        android:scaleType="fitCenter"
         app:layout_constraintStart_toEndOf="@+id/imageButton"
-        app:layout_constraintTop_toTopOf="@+id/main_list"
-        app:srcCompat="@drawable/ic_home_black_24dp" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_laugh" />
 
     <ImageButton
         android:id="@+id/imageButton4"
@@ -116,11 +110,13 @@
         android:layout_height="35dp"
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
-        android:background="@drawable/yuvarlak"
-        app:layout_constraintBottom_toTopOf="@+id/main_list"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/yuvarlak2"
+        android:padding="5dp"
+        android:scaleType="centerInside"
         app:layout_constraintEnd_toStartOf="@+id/imageButton"
-        app:layout_constraintTop_toTopOf="@+id/main_list"
-        app:srcCompat="@drawable/ic_home_black_24dp" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/love" />
 
     <ImageButton
         android:id="@+id/imageButton"
@@ -130,12 +126,27 @@
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         android:background="@drawable/yuvarlak2"
-        app:layout_constraintBottom_toTopOf="@+id/main_list"
+        android:scaleType="centerInside"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/main_list"
-        app:layout_constraintVertical_bias="0.32"
-        app:srcCompat="@drawable/ic_home_black_24dp" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_open_book" />
+
+    <ListView
+        android:id="@+id/mainlist"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/main_bottomBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/main_topBar" />
 
 </android.support.constraint.ConstraintLayout>

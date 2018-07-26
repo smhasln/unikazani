@@ -25,6 +25,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Şifre"
+            android:inputType="textPassword"
+            android:text="123"
             android:textColor="@android:color/white"
             android:textColorHint="@android:color/white"
             android:textSize="15sp" />
@@ -63,6 +65,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Kullanıcı adı"
+            android:inputType="text"
+            android:text="semih"
             android:textColor="@android:color/white"
             android:textColorHint="@android:color/white"
             android:textSize="15sp" />

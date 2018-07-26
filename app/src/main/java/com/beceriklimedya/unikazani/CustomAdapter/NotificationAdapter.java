@@ -5,10 +5,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.TextView;
 
 import com.beceriklimedya.unikazani.Notifications;
 import com.beceriklimedya.unikazani.R;
 
+import java.sql.Time;
 import java.util.ArrayList;
 
 public class NotificationAdapter extends BaseAdapter {
@@ -45,6 +47,12 @@ public class NotificationAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup viewGroup) {
         View RowView = layoutInflater.inflate(R.layout.row_notifications,null);
+
+        TextView title = RowView.findViewById(R.id.notificationTitle);
+        TextView time = RowView.findViewById(R.id.notificationTime);
+
+        title.setText(NotificationArrayTitle.get(position));
+        time.setText(NotificationArrayTime.get(position));
 
         return RowView;
     }

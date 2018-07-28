@@ -8,7 +8,7 @@ import java.util.Map;
 
 
 public class ProfileSettingsJSON extends StringRequest {
-    private static final String PROFILE_SETTINGS_URL = "http://www.unikazani.com/json/profile_settings.php";
+    private static final String PROFILE_SETTINGS_URL = "http://www.unikazani.com/json/profile_update.php";
 
     private Map<String, String> params;
 

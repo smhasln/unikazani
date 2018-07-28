@@ -7,16 +7,16 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-public class MainJSON extends StringRequest {
-    private static final String LOGIN_URL = "http://www.unikazani.com/json/main.php";
+public class CommentJSON extends StringRequest {
+    private static final String LOGIN_URL = "http://www.unikazani.com/json/comment.php";
 
     private Map<String, String> params;
 
-    public MainJSON(String userId, Response.Listener<String> listener) {
+    public CommentJSON(String feedId, Response.Listener<String> listener) {
         super(Method.POST, LOGIN_URL, listener, null);
         // İşlemler için kullanılacak veriler hazırlanır.
         params = new HashMap<>();
-        params.put("id", userId);
+        params.put("share_id", feedId);
     }
 
     @Override

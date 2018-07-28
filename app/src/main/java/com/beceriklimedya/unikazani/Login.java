@@ -44,7 +44,7 @@ public class Login extends AppCompatActivity {
 
     }
 
-    private void login(String userName, String password, String token)
+    private void login(final String userName, final String password, String token)
     {
         final ProgressDialog progress = ProgressDialog.show(Login.this, "Oturum açma", "Lütfen bekleyiniz.", true);
         Response.Listener<String> responselistener = new Response.Listener<String>()
@@ -62,10 +62,16 @@ public class Login extends AppCompatActivity {
 
                         String userId = jsonresponse.getString("id");
                         String auth = jsonresponse.getString("auth");
+                        String profile = jsonresponse.getString("profile");
 
                         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
                         SharedPreferences.Editor editor = preferences.edit();
                         editor.putString("userId", userId);
+                        editor.putString("remember", "1");
+                        editor.putString("auth", auth);
+                        editor.putString("profile", profile);
+                        editor.putString("username", userName);
+                        editor.putString("password", password);
                         editor.commit();
 
                         if (auth.equals("0")) {

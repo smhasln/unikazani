@@ -5,13 +5,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.beceriklimedya.unikazani.MainScreen;
 import com.beceriklimedya.unikazani.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MainAdapter extends BaseAdapter {
 
@@ -76,7 +80,7 @@ public class MainAdapter extends BaseAdapter {
         ImageView imgImage = RowView.findViewById(R.id.feed_item_image);
         TextView txtLike = RowView.findViewById(R.id.feed_item_like_count);
         TextView txtHashtag = RowView.findViewById(R.id.feed_item_hashtag);
-        ImageView imgProfile = RowView.findViewById(R.id.feed_item_profile);
+        CircleImageView imgProfile = RowView.findViewById(R.id.feed_item_profile);
 
         txtName.setText(MainArrayName.get(position));
         txtCategory.setText(MainArrayCategory.get(position));
@@ -85,8 +89,24 @@ public class MainAdapter extends BaseAdapter {
         txtLike.setText(MainArrayLike.get(position));
         txtHashtag.setText(MainArrayHashTag.get(position));
 
-        imgImage.setImageResource(R.drawable.deneme2);
-        imgProfile.setImageResource(R.drawable.deneme);
+        Picasso.get()
+                .load("http://www.unikazani.com/json/upload/" + MainArrayProfile.get(position) + ".jpg")
+                .into(imgProfile);
+
+        if (MainArrayImage.get(position).equals("0"))
+        {
+            imgImage.setVisibility(View.GONE);
+
+        }
+        else
+        {
+            imgImage.setVisibility(View.VISIBLE);
+            Picasso.get()
+                    .load("http://www.unikazani.com/json/upload/" + MainArrayImage.get(position) + ".jpg")
+                    .into(imgImage);
+        }
+
+
 
         return RowView;
     }

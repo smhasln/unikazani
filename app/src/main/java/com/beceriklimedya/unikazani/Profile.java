@@ -1,17 +1,33 @@
 package com.beceriklimedya.unikazani;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.toolbox.Volley;
+import com.beceriklimedya.unikazani.CustomAdapter.MainAdapter;
 import com.beceriklimedya.unikazani.CustomAdapter.ProfileListAdapter;
+import com.beceriklimedya.unikazani.JSON.MainJSON;
+import com.beceriklimedya.unikazani.JSON.ProfileJSON;
+import com.squareup.picasso.Picasso;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class Profile extends AppCompatActivity {
 
@@ -23,9 +39,10 @@ public class Profile extends AppCompatActivity {
     private ArrayList<String> MainArrayProfile = new ArrayList<>();
     private ArrayList<String> MainArrayLike = new ArrayList<>();
     private ArrayList<String> MainArrayHashTag = new ArrayList<>();
+    private ArrayList<String> MainArrayId = new ArrayList<>();
 
     private ImageButton profileChat;
-    private ImageView profilePhoto;
+    private CircleImageView profilePhoto;
     private TextView profileShare;
     private TextView profileScore;
     private TextView profileAge;
@@ -34,11 +51,15 @@ public class Profile extends AppCompatActivity {
     private ImageButton profileSettings;
     private ImageButton profileBack;
 
+    private String userId;
     private ListView profileList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
+
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        userId = preferences.getString("userId", "N/A");
 
         profileChat = findViewById(R.id.profile_chat);
         profilePhoto = findViewById(R.id.profile_photo);
@@ -59,7 +80,6 @@ public class Profile extends AppCompatActivity {
             }
         });
 
-
         profileBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -74,46 +94,86 @@ public class Profile extends AppCompatActivity {
 
     private void fill()
     {
-        MainArrayName.add("Semih Aslan");
-        MainArrayName.add("Ümit Bekir Hepyakışıklı");
-        MainArrayName.add("Doğan Topdaş");
-        MainArrayName.add("Semih Aslan");
+        Response.Listener<String> responselistener = new Response.Listener<String>()
+        {
+            @Override
+            public void onResponse(String response) {
+                try {
 
-        MainArrayCategory.add("İtiraf");
-        MainArrayCategory.add("Ev Arkadaşı");
-        MainArrayCategory.add("Ders Notu");
-        MainArrayCategory.add("Etkinlik");
+                    JSONObject jsonresponse = new JSONObject(response);
 
-        MainArrayHashTag.add("Ege Üniversitesi");
-        MainArrayHashTag.add("Bilkent Üniversitesi");
-        MainArrayHashTag.add("ODTÜ Üniversitesi");
-        MainArrayHashTag.add("Ege Üniversitesi");
+                    String warning = jsonresponse.getString("warning");
 
-        MainArrayLike.add("14");
-        MainArrayLike.add("14");
-        MainArrayLike.add("14");
-        MainArrayLike.add("14");
+                    // BAŞKASI
+                    if (warning.equals("1"))
+                    {
+                        profileSettings.setVisibility(View.GONE);
+                        profileChat.setVisibility(View.VISIBLE);
+                    }
+                    else
+                    {
+                        profileSettings.setVisibility(View.VISIBLE);
+                        profileChat.setVisibility(View.GONE);
+                    }
 
-        MainArrayText.add("Selamlar nasılsınız?");
-        MainArrayText.add("Selamlar nasılsınız?");
-        MainArrayText.add("Selamlar nasılsınız?");
-        MainArrayText.add("Selamlar nasılsınız?");
+                    JSONArray name = jsonresponse.getJSONArray("name");
+                    JSONArray category = jsonresponse.getJSONArray("category");
+                    JSONArray time = jsonresponse.getJSONArray("time");
+                    JSONArray text = jsonresponse.getJSONArray("text");
+                    JSONArray image = jsonresponse.getJSONArray("image");
+                    JSONArray profile = jsonresponse.getJSONArray("profile");
+                    JSONArray likes = jsonresponse.getJSONArray("likes");
+                    //JSONArray university = jsonresponse.getJSONArray("university");
+                    //JSONArray id = jsonresponse.getJSONArray("id");
 
-        MainArrayTime.add("14:40");
-        MainArrayTime.add("14:40");
-        MainArrayTime.add("14:40");
-        MainArrayTime.add("14:40");
+                    String user_name = jsonresponse.getString("user_name");
+                    String user_uni = jsonresponse.getString("user_university");
+                    String user_score = jsonresponse.getString("score");
+                    String user_share = jsonresponse.getString("share_rows");
+                    String user_photo = jsonresponse.getString("photo");
 
-        profileList.setAdapter(new ProfileListAdapter(Profile.this,
-                MainArrayName,
-                MainArrayCategory,
-                MainArrayTime,
-                MainArrayText,
-                MainArrayImage,
-                MainArrayProfile,
-                MainArrayLike,MainArrayHashTag));
+                    profileName.setText(user_name);
+                    profileUni.setText(user_uni);
+                    profileScore.setText(user_score + " puan");
+                    profileShare.setText(user_share + " paylaşım");
+
+                    Picasso.get()
+                            .load("http://www.unikazani.com/json/upload/" + user_photo + ".jpg")
+                            .into(profilePhoto);
+
+                    for (int i = 0; i < profile.length(); i++){
+                        MainArrayName.add(i, name.get(i).toString());
+                        MainArrayCategory.add(i, category.get(i).toString());
+                        MainArrayTime.add(i, time.get(i).toString());
+                        MainArrayText.add(i, text.get(i).toString());
+                        MainArrayImage.add(i, image.get(i).toString());
+                        MainArrayProfile.add(i, profile.get(i).toString());
+                        MainArrayLike.add(i, likes.get(i).toString());
+                        MainArrayHashTag.add(i, "ERROR");
+                        MainArrayId.add(i, "ERROR");
+                    }
+
+                    profileList.setAdapter(new ProfileListAdapter(Profile.this,
+                            MainArrayName,
+                            MainArrayCategory,
+                            MainArrayTime,
+                            MainArrayText,
+                            MainArrayImage,
+                            MainArrayProfile,
+                            MainArrayLike,MainArrayHashTag));
+                }
+                catch (JSONException e)
+                {
+                    e.printStackTrace();
+                }
+            }
+
+        };
+
+        ProfileJSON loginrequest = new ProfileJSON(userId,userId,responselistener);
+        RequestQueue queue = Volley.newRequestQueue(Profile.this);
+        queue.add(loginrequest);
     }
-
 
     @Override
     public void onBackPressed() {

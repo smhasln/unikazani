@@ -1,27 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:paddingBottom="15dp">
 
     <TextView
-        android:id="@+id/commentTitle"
+        android:id="@+id/commentName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
-        android:layout_marginLeft="16dp"
+        android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:text="Merhaba bu bir yorum! Merhaba bir yorum!"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="19dp"
+        android:text="Semih ASLAN"
         android:textColor="@color/cardview_dark_background"
         android:textSize="12sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/commentPhoto"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/commentDesc"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="Merhaba bu bir yorum! Merhaba bir yorum!"
+        android:textColor="@color/cardview_dark_background"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/commentPhoto"
+        app:layout_constraintTop_toBottomOf="@+id/commentName" />
 
     <TextView
         android:id="@+id/commentTime"
@@ -33,7 +50,7 @@
         android:text="10 dakika önce"
         android:textSize="10sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/commentTitle" />
+        app:layout_constraintTop_toBottomOf="@+id/commentDesc" />
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/commentPhoto"
@@ -41,7 +58,7 @@
         android:layout_height="50dp"
         android:layout_marginLeft="16dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:src="@drawable/deneme"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

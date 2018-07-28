@@ -1,26 +1,31 @@
 package com.beceriklimedya.unikazani;
 
-import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.HapticFeedbackConstants;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Adapter;
 import android.widget.AdapterView;
+import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
 import com.beceriklimedya.unikazani.CustomAdapter.SearchAdapter;
-import com.beceriklimedya.unikazani.JSON.LoginJSON;
 import com.beceriklimedya.unikazani.JSON.SearchActionJSON;
 import com.beceriklimedya.unikazani.JSON.SearchJSON;
-import com.tapadoo.alerter.Alerter;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -28,7 +33,9 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class Search extends AppCompatActivity {
+public class Search extends AppCompatActivity{
+
+    public static String data;
 
     private ArrayList<String> SearchUniName = new ArrayList<>();
     private ArrayList<String> SearchUniId = new ArrayList<>();
@@ -39,6 +46,8 @@ public class Search extends AppCompatActivity {
 
     private SearchAdapter searchAdapter;
     private String userId;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,12 +73,14 @@ public class Search extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Search.super.onBackPressed();
+
+                startActivity(new Intent(Search.this,MainScreen.class));
                 overridePendingTransition(R.anim.geri1,R.anim.geri2);
             }
         });
     }
 
-    private void action(String uniId, String userId, final String status)
+    public void action (String uniId, String userId, final String status)
     {
         Response.Listener<String> responselistener = new Response.Listener<String>()
         {
@@ -120,7 +131,7 @@ public class Search extends AppCompatActivity {
                         SearchUniStatus.add(i, status.get(i).toString());
                     }
 
-                    searchAdapter = new SearchAdapter(Search.this, SearchUniName, SearchUniStatus);
+                    searchAdapter = new SearchAdapter(Search.this, SearchUniName, SearchUniStatus, SearchUniId);
                     searchList.setAdapter(searchAdapter);
                 }
                 catch (JSONException e)
@@ -131,7 +142,7 @@ public class Search extends AppCompatActivity {
 
         };
 
-        SearchJSON loginrequest = new SearchJSON(userId,responselistener);
+        SearchJSON loginrequest = new SearchJSON(userId,"10",responselistener);
         RequestQueue queue = Volley.newRequestQueue(Search.this);
         queue.add(loginrequest);
     }
@@ -139,6 +150,10 @@ public class Search extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+
+        startActivity(new Intent(Search.this,MainScreen.class));
         overridePendingTransition(R.anim.geri1,R.anim.geri2);
     }
+
+
 }

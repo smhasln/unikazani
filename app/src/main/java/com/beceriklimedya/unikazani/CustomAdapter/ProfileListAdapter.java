@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.beceriklimedya.unikazani.MainScreen;
 import com.beceriklimedya.unikazani.Profile;
 import com.beceriklimedya.unikazani.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -86,8 +87,25 @@ public class ProfileListAdapter extends BaseAdapter {
         txtLike.setText(MainArrayLike.get(position));
         txtHashtag.setText(MainArrayHashTag.get(position));
 
-        imgImage.setImageResource(R.drawable.deneme2);
-        imgProfile.setImageResource(R.drawable.deneme);
+        Picasso.get()
+                .load("http://www.unikazani.com/json/upload/" + MainArrayProfile.get(position) + ".jpg")
+                .into(imgProfile);
+
+        if (MainArrayImage.get(position).equals("0"))
+        {
+            imgImage.setVisibility(View.GONE);
+
+        }
+        else
+        {
+            imgImage.setVisibility(View.VISIBLE);
+            Picasso.get()
+                    .load("http://www.unikazani.com/json/upload/" + MainArrayImage.get(position) + ".jpg")
+                    .into(imgImage);
+        }
+
+
+
 
         return RowView;
     }

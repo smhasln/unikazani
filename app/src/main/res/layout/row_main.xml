@@ -7,14 +7,23 @@
     android:paddingBottom="15dp"
     android:descendantFocusability="blocksDescendants">
 
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/feed_item_profile"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
         android:id="@+id/feed_item_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:text="Semih Aslan"
+        android:text="Yükleniyor"
         android:textColor="@color/colorPrimaryDark"
         android:textSize="14sp"
         android:textStyle="bold"
@@ -28,7 +37,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
-        android:text="16 saat önce"
+        android:text="Yükleniyor"
         android:textSize="10sp"
         app:fontFamily="sans-serif"
         app:layout_constraintBottom_toBottomOf="@+id/feed_item_category"
@@ -39,24 +48,27 @@
         android:id="@+id/feed_item_text"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:text="Lorem Ipsum, adı bilinmeyen bir matbaacının bir hurufat numune kitabı oluşturmak üzere bir yazı galerisini alarak karıştırdığı 1500'lerden beri endüstri standardı sahte metinler olarak kullanılmıştır."
+        android:layout_marginEnd="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:text="Yükleniyor"
         android:textSize="12sp"
         android:textStyle="bold"
         android:visibility="visible"
         app:fontFamily="sans-serif"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/feed_item_profile"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/feed_item_profile" />
 
     <TextView
         android:id="@+id/feed_item_category"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="5dp"
-        android:layout_marginStart="5dp"
-        android:text="bir itiraf paylaştı."
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:text="Yükleniyor"
         android:textSize="14sp"
         app:fontFamily="sans-serif"
         app:layout_constraintBottom_toBottomOf="@+id/feed_item_name"
@@ -67,16 +79,15 @@
         android:id="@+id/feed_item_image"
         android:layout_width="0dp"
         android:layout_height="150dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
-        android:scaleType="centerCrop"
         android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/feed_item_profile"
-        app:layout_constraintTop_toBottomOf="@+id/feed_item_text"
-        app:srcCompat="@drawable/deneme2" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/feed_item_text" />
 
     <ImageButton
         android:id="@+id/feed_item_like"
@@ -91,26 +102,15 @@
         app:layout_constraintTop_toBottomOf="@+id/feed_item_image"
         app:srcCompat="@drawable/ic_favorite_black_24dp" />
 
-    <ImageView
-        android:id="@+id/feed_item_profile"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/deneme" />
-
     <TextView
         android:id="@+id/feed_item_like_count"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
         android:layout_marginTop="8dp"
-        android:text="26 beğeni"
+        android:text="Yükleniyor"
         android:textSize="12sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/feed_item_like"
@@ -121,11 +121,13 @@
         android:id="@+id/feed_item_hashtag"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="#EgeUniversitesi"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="5dp"
+        android:text="Yükleniyor"
         android:textSize="12sp"
         android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@+id/feed_item_text"
-        app:layout_constraintTop_toBottomOf="@+id/feed_item_image" />
+        app:layout_constraintStart_toEndOf="@+id/feed_item_profile"
+        app:layout_constraintTop_toBottomOf="@+id/feed_item_name" />
 
 </android.support.constraint.ConstraintLayout>

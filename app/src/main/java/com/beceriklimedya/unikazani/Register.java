@@ -2,6 +2,8 @@ package com.beceriklimedya.unikazani;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -46,11 +48,10 @@ public class Register extends AppCompatActivity {
     }
 
 
-    private void register(String name, String userName, String password, String mail, String token)
+    private void register(String name, final String userName, final String password, String mail, String token)
     {
 
         final ProgressDialog progress = ProgressDialog.show(Register.this, "Oturum açma", "Lütfen bekleyiniz.", true);
-
 
         Response.Listener<String> responselistener = new Response.Listener<String>()
         {
@@ -66,6 +67,21 @@ public class Register extends AppCompatActivity {
                     Log.i("yaz",response);
                     if (error == 0)
                     {
+
+                        String userId = jsonresponse.getString("id");
+                        String auth = jsonresponse.getString("auth");
+                        String profile = jsonresponse.getString("profile");
+
+                        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                        SharedPreferences.Editor editor = preferences.edit();
+                        editor.putString("userId", userId);
+                        editor.putString("remember", "1");
+                        editor.putString("auth", auth);
+                        editor.putString("profile", profile);
+                        editor.putString("username", userName);
+                        editor.putString("password", password);
+                        editor.commit();
+
                         startActivity(new Intent(Register.this,MainScreen.class));
                         overridePendingTransition(R.anim.ileri1,R.anim.ileri2);
                     }

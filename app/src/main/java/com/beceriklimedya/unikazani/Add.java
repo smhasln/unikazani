@@ -68,6 +68,7 @@ public class Add extends AppCompatActivity {
     private ImageButton addCategory1;
     private ImageButton addCategory2;
     private ImageButton addCategory3;
+    private ImageButton addCategory4;
     private ImageButton addDelete;
 
     private String selected_id = "0";
@@ -100,6 +101,7 @@ public class Add extends AppCompatActivity {
         addCategory1 = findViewById(R.id.addCategory1);
         addCategory2 = findViewById(R.id.addCategory2);
         addCategory3 = findViewById(R.id.addCategory3);
+        addCategory4 = findViewById(R.id.addCategory4);
         addDelete = findViewById(R.id.addDelete);
 
         getUni();
@@ -112,9 +114,12 @@ public class Add extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 selected_category = "Ev Arkadaşı";
+
                 addCategory1.setBackgroundResource(R.drawable.corneradd);
+
                 addCategory2.setBackgroundResource(Color.TRANSPARENT);
                 addCategory3.setBackgroundResource(Color.TRANSPARENT);
+                addCategory4.setBackgroundResource(Color.TRANSPARENT);
             }
         });
 
@@ -123,8 +128,10 @@ public class Add extends AppCompatActivity {
             public void onClick(View v) {
                 selected_category = "İtiraf";
                 addCategory2.setBackgroundResource(R.drawable.corneradd);
+
                 addCategory1.setBackgroundResource(Color.TRANSPARENT);
                 addCategory3.setBackgroundResource(Color.TRANSPARENT);
+                addCategory4.setBackgroundResource(Color.TRANSPARENT);
             }
         });
 
@@ -133,8 +140,22 @@ public class Add extends AppCompatActivity {
             public void onClick(View v) {
                 selected_category = "Ders Notları";
                 addCategory3.setBackgroundResource(R.drawable.corneradd);
+
                 addCategory1.setBackgroundResource(Color.TRANSPARENT);
                 addCategory2.setBackgroundResource(Color.TRANSPARENT);
+                addCategory4.setBackgroundResource(Color.TRANSPARENT);
+            }
+        });
+
+        addCategory4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selected_category = "Etkinlik";
+                addCategory4.setBackgroundResource(R.drawable.corneradd);
+
+                addCategory1.setBackgroundResource(Color.TRANSPARENT);
+                addCategory2.setBackgroundResource(Color.TRANSPARENT);
+                addCategory3.setBackgroundResource(Color.TRANSPARENT);
             }
         });
 
@@ -149,7 +170,27 @@ public class Add extends AppCompatActivity {
                 }
                 else
                 {
-                    share();
+
+                    AlertDialog.Builder builder1 = new AlertDialog.Builder(Add.this);
+                    builder1.setTitle("Bilgi");
+                    builder1.setMessage("Paylaşıldıktan sonra düzenleyemeyeceksiniz. Devam edilsin mi?");
+                    builder1.setCancelable(true);
+                    builder1.setPositiveButton("Devam Et",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    share();
+                                }
+                            });
+                    builder1.setNegativeButton("Vazgeç",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    dialog.dismiss();
+
+                                }
+                            });
+                    AlertDialog alert11 = builder1.create();
+                    alert11.show();
+
                 }
             }
         });
@@ -195,7 +236,7 @@ public class Add extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Add.super.onBackPressed();
-                startActivity(new Intent(Add.this,MainScreen.class));
+
                 overridePendingTransition(R.anim.geri1,R.anim.geri2);
             }
         });
@@ -268,7 +309,7 @@ public class Add extends AppCompatActivity {
                     if (error == 0)
                     {
                         progress.dismiss();
-                        startActivity(new Intent(Add.this,MainScreen.class));
+                        Add.super.onBackPressed();
                         overridePendingTransition(R.anim.geri1,R.anim.geri2);
                     }
 
@@ -375,7 +416,7 @@ public class Add extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        startActivity(new Intent(Add.this,MainScreen.class));
+
         overridePendingTransition(R.anim.geri1,R.anim.geri2);
     }
 }

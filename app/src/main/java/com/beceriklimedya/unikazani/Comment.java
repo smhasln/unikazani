@@ -45,7 +45,6 @@ public class Comment extends AppCompatActivity {
 
     private CommentAdapter commentAdapter;
 
-
     CircleImageView commentphoto;
     TextView commentname;
     TextView commenttext;
@@ -59,9 +58,22 @@ public class Comment extends AppCompatActivity {
 
         Intent git = getIntent();
         feedId = git.getStringExtra("feedId");
+        final String feedUserId = git.getStringExtra("feedUserId");
+
         String feedPhoto = git.getStringExtra("feedPhoto");
         String feedName = git.getStringExtra("feedName");
         String feedText = git.getStringExtra("feedText");
+
+        Button goProfile = findViewById(R.id.commentbutton);
+        goProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent go = new Intent(Comment.this,Profile.class);
+                go.putExtra("feedUserId", feedUserId);
+                startActivity(go);
+
+            }
+        });
 
         commentphoto = findViewById(R.id.commentPhoto);
         commentname = findViewById(R.id.commentname);
@@ -98,7 +110,6 @@ public class Comment extends AppCompatActivity {
 
                     JSONObject jsonresponse = new JSONObject(response);
 
-                    Log.i("yaz",response);
                     Integer error = jsonresponse.getInt("error");
 
                     if (error == 0)

@@ -12,7 +12,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SplashScreen"/>
+        <activity android:name=".SplashScreen" />
         <activity android:name=".Login" />
         <activity android:name=".Register" />
         <activity android:name=".MainScreen">
@@ -28,8 +28,13 @@
         <activity android:name=".ProfileSettings" />
         <activity
             android:name=".Comment"
-            android:theme="@style/AppTheme.CustomTheme"></activity>
-        <activity android:name=".Add"></activity>
+            android:theme="@style/AppTheme.CustomTheme" />
+        <activity android:name=".Add" />
+        <activity android:name=".UniversityProfile" />
+        <activity android:name=".Top10" />
+        <activity android:name=".PersonelList" />
+        <activity android:name=".Admin" />
+        <activity android:name=".Chat"></activity>
     </application>
 
 </manifest>

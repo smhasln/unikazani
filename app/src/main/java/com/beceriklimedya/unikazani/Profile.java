@@ -11,6 +11,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -50,7 +51,9 @@ public class Profile extends AppCompatActivity {
     private TextView profileName;
     private ImageButton profileSettings;
     private ImageButton profileBack;
+    private ImageButton profileAdmin;
 
+    private String comId;
     private String userId;
     private ListView profileList;
     @Override
@@ -60,6 +63,9 @@ public class Profile extends AppCompatActivity {
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         userId = preferences.getString("userId", "N/A");
+
+        Intent go = getIntent();
+        comId = go.getStringExtra("feedUserId");
 
         profileChat = findViewById(R.id.profile_chat);
         profilePhoto = findViewById(R.id.profile_photo);
@@ -71,6 +77,7 @@ public class Profile extends AppCompatActivity {
         profileSettings = findViewById(R.id.profile_settings);
         profileBack = findViewById(R.id.profile_back);
         profileList = findViewById(R.id.profile_list);
+        profileAdmin = findViewById(R.id.profile_admin);
 
         profileSettings.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -88,12 +95,27 @@ public class Profile extends AppCompatActivity {
             }
         });
 
+        profileAdmin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Profile.this,Admin.class));
+            }
+        });
+
+        profileChat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Profile.this,Chat.class));
+            }
+        });
+
         fill();
 
     }
 
     private void fill()
     {
+
         Response.Listener<String> responselistener = new Response.Listener<String>()
         {
             @Override
@@ -102,6 +124,7 @@ public class Profile extends AppCompatActivity {
 
                     JSONObject jsonresponse = new JSONObject(response);
 
+                    Log.i("yaz",response);
                     String warning = jsonresponse.getString("warning");
 
                     // BAŞKASI
@@ -126,12 +149,14 @@ public class Profile extends AppCompatActivity {
                     //JSONArray university = jsonresponse.getJSONArray("university");
                     //JSONArray id = jsonresponse.getJSONArray("id");
 
+                    String user_age = jsonresponse.getString("birthday");
                     String user_name = jsonresponse.getString("user_name");
                     String user_uni = jsonresponse.getString("user_university");
                     String user_score = jsonresponse.getString("score");
                     String user_share = jsonresponse.getString("share_rows");
                     String user_photo = jsonresponse.getString("photo");
 
+                    profileAge.setText(user_age);
                     profileName.setText(user_name);
                     profileUni.setText(user_uni);
                     profileScore.setText(user_score + " puan");
@@ -170,7 +195,7 @@ public class Profile extends AppCompatActivity {
 
         };
 
-        ProfileJSON loginrequest = new ProfileJSON(userId,userId,responselistener);
+        ProfileJSON loginrequest = new ProfileJSON(userId,comId,responselistener);
         RequestQueue queue = Volley.newRequestQueue(Profile.this);
         queue.add(loginrequest);
     }

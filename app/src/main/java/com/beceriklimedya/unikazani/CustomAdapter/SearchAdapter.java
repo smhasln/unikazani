@@ -20,17 +20,13 @@ import java.util.ArrayList;
 public class SearchAdapter extends BaseAdapter {
 
     private ArrayList<String> searchUniName;
-    private ArrayList<String> searchUniStatus;
-    private ArrayList<String> searchUniId;
 
     LayoutInflater layoutInflater = null;
 
 
-    public SearchAdapter(Search search, ArrayList<String> name, ArrayList<String> status, ArrayList<String> searchUniId)
+    public SearchAdapter(Search search, ArrayList<String> name)
     {
         this.searchUniName = name;
-        this.searchUniStatus = status;
-        this.searchUniId = searchUniId;
 
         layoutInflater = (LayoutInflater)search.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
@@ -57,16 +53,7 @@ public class SearchAdapter extends BaseAdapter {
         TextView txtName = RowView.findViewById(R.id.search_name);
         TextView txtText = RowView.findViewById(R.id.search_text);
 
-        if (searchUniStatus.get(position).equals("0"))
-        {
-            txtText.setText("Gönderileri görmek için dokun ve takibe al!");
-            txtText.setTextColor(Color.parseColor("#FF4B2EDA"));
-        }
-        else
-        {
-            txtText.setText("Gönderileri görmek istemiyorsan dokun ve takipten çık!");
-            txtText.setTextColor(Color.parseColor("#FFFF4081"));
-        }
+        txtText.setText("Üniversite profiline gitmek için tıkla");
 
         txtName.setText(searchUniName.get(position));
 

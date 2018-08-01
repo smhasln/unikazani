@@ -33,6 +33,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+
 public class MainScreen extends AppCompatActivity {
 
     private ArrayList<String> MainArrayName = new ArrayList<>();
@@ -44,12 +45,14 @@ public class MainScreen extends AppCompatActivity {
     private ArrayList<String> MainArrayLike = new ArrayList<>();
     private ArrayList<String> MainArrayHashTag = new ArrayList<>();
     private ArrayList<String> MainArrayId = new ArrayList<>();
+    private ArrayList<String> MainArrayUserId = new ArrayList<>();
 
     private ImageButton btnHome;
     private ImageButton btnAdd;
     private ImageButton btnSearch;
     private ImageButton btnNotification;
     private ImageButton btnProfile;
+    private ImageButton btnTop10;
 
     private ListView main_list;
 
@@ -62,6 +65,9 @@ public class MainScreen extends AppCompatActivity {
 
     private String token;
     private String profil;
+
+    private String data = "99";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,6 +90,7 @@ public class MainScreen extends AppCompatActivity {
             startActivity(new Intent(MainScreen.this, SplashScreen.class));
         }
 
+
         myDialog = new Dialog(this);
         main_list = findViewById(R.id.mainlist);
 
@@ -92,6 +99,46 @@ public class MainScreen extends AppCompatActivity {
         btnSearch = findViewById(R.id.main_search);
         btnNotification = findViewById(R.id.main_notification);
         btnProfile = findViewById(R.id.main_profile);
+        btnTop10 = findViewById(R.id.maintop10);
+
+        ImageButton filter1 = findViewById(R.id.mainfilter1);
+        ImageButton filter2 = findViewById(R.id.mainfilter2);
+        ImageButton filter3 = findViewById(R.id.mainfilter3);
+        ImageButton filter4 = findViewById(R.id.mainfilter4);
+
+        filter1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                data = "İtiraf";
+                fill();
+
+            }
+        });
+
+        filter2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                data = "Ders Notları";
+                fill();
+            }
+        });
+
+        filter3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                data = "Ev Arkadaşı";
+                fill();
+            }
+        });
+
+        filter4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                data = "99";
+                fill();
+            }
+        });
+
 
         main_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -102,6 +149,7 @@ public class MainScreen extends AppCompatActivity {
                 git.putExtra("feedPhoto",MainArrayProfile.get(position));
                 git.putExtra("feedName",MainArrayName.get(position));
                 git.putExtra("feedText",MainArrayText.get(position));
+                git.putExtra("feedUserId",MainArrayUserId.get(position));
                 startActivity(git);
             }
         });
@@ -133,7 +181,9 @@ public class MainScreen extends AppCompatActivity {
         btnProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainScreen.this,Profile.class));
+                Intent go = new Intent(MainScreen.this,Profile.class);
+                go.putExtra("feedUserId", userId);
+                startActivity(go);
                 overridePendingTransition(R.anim.ileri1,R.anim.ileri2);
 
             }
@@ -146,6 +196,23 @@ public class MainScreen extends AppCompatActivity {
             }
         });
 
+        btnTop10.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainScreen.this,Top10.class));
+                overridePendingTransition(R.anim.ileri1,R.anim.ileri2);
+            }
+        });
+
+
+    }
+
+
+    @Override
+    public void onResume()
+    {  // After a pause OR at startup
+        super.onResume();
+        fill();
     }
 
     private void login()
@@ -201,6 +268,9 @@ public class MainScreen extends AppCompatActivity {
 
     private void fill()
     {
+
+        final ProgressDialog progress = ProgressDialog.show(MainScreen.this, "", "", true);
+
         MainArrayName.clear();
         MainArrayCategory.clear();
         MainArrayTime.clear();
@@ -210,6 +280,7 @@ public class MainScreen extends AppCompatActivity {
         MainArrayLike.clear();
         MainArrayHashTag.clear();
         MainArrayId.clear();
+        MainArrayUserId.clear();
 
 
         Response.Listener<String> responselistener = new Response.Listener<String>()
@@ -220,6 +291,9 @@ public class MainScreen extends AppCompatActivity {
 
                     JSONObject jsonresponse = new JSONObject(response);
 
+                    Log.i("yaz",response);
+
+                    progress.dismiss();
                     JSONArray name = jsonresponse.getJSONArray("name");
                     JSONArray category = jsonresponse.getJSONArray("category");
                     JSONArray time = jsonresponse.getJSONArray("time");
@@ -229,6 +303,7 @@ public class MainScreen extends AppCompatActivity {
                     JSONArray likes = jsonresponse.getJSONArray("likes");
                     JSONArray university = jsonresponse.getJSONArray("university");
                     JSONArray id = jsonresponse.getJSONArray("id");
+                    JSONArray userid = jsonresponse.getJSONArray("user_id");
 
                     for (int i = 0; i < name.length(); i++){
                         MainArrayName.add(i, name.get(i).toString());
@@ -240,6 +315,7 @@ public class MainScreen extends AppCompatActivity {
                         MainArrayLike.add(i, likes.get(i).toString());
                         MainArrayHashTag.add(i, university.get(i).toString());
                         MainArrayId.add(i, id.get(i).toString());
+                        MainArrayUserId.add(i,userid.get(i).toString());
                     }
 
                     main_list.setAdapter(new MainAdapter(MainScreen.this,
@@ -259,7 +335,7 @@ public class MainScreen extends AppCompatActivity {
 
         };
 
-        MainJSON loginrequest = new MainJSON(userId,responselistener);
+        MainJSON loginrequest = new MainJSON(userId,data,responselistener);
         RequestQueue queue = Volley.newRequestQueue(MainScreen.this);
         queue.add(loginrequest);
 

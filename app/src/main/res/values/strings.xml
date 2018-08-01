@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">unikazani</string>
+    <string name="login">http://www.unikazani.com/json/login.php</string>
 </resources>

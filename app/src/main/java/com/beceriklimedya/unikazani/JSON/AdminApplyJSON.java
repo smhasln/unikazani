@@ -7,17 +7,18 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-public class MainJSON extends StringRequest {
-    private static final String LOGIN_URL = "http://www.unikazani.com/json/main.php";
+public class AdminApplyJSON extends StringRequest {
+
+    private static final String LOGIN_URL = "http://www.unikazani.com/json/admin_auth.php";
 
     private Map<String, String> params;
 
-    public MainJSON(String userId,String data, Response.Listener<String> listener) {
+    public AdminApplyJSON(String id, String uni_id,Response.Listener<String> listener) {
         super(Method.POST, LOGIN_URL, listener, null);
         // İşlemler için kullanılacak veriler hazırlanır.
         params = new HashMap<>();
-        params.put("id", userId);
-        params.put("data", data);
+        params.put("id", id);
+        params.put("uni_id", uni_id);
     }
 
     @Override

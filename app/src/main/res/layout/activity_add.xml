@@ -13,7 +13,6 @@
         android:layout_marginLeft="16dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:src="@drawable/deneme"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -45,8 +44,7 @@
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/addText"
-        app:srcCompat="@drawable/deneme2" />
+        app:layout_constraintTop_toBottomOf="@+id/addText"/>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/addPhotoPick"
@@ -181,6 +179,20 @@
         app:srcCompat="@drawable/ic_open_book" />
 
     <ImageButton
+        android:id="@+id/addCategory4"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:background="@android:color/transparent"
+        android:padding="5dp"
+        android:scaleType="fitCenter"
+        app:layout_constraintStart_toEndOf="@+id/addCategory3"
+        app:layout_constraintTop_toBottomOf="@+id/add2"
+        app:srcCompat="@drawable/confetti" />
+
+    <ImageButton
         android:id="@+id/addCategory1"
         android:layout_width="40dp"
         android:layout_height="40dp"
@@ -208,6 +220,18 @@
 
     <TextView
         android:id="@+id/add4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Etkinlik"
+        android:textSize="10sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/addCategory4"
+        app:layout_constraintStart_toStartOf="@+id/addCategory4"
+        app:layout_constraintTop_toBottomOf="@+id/addCategory2" />
+
+    <TextView
+        android:id="@+id/add6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"

@@ -1,30 +1,19 @@
 package com.beceriklimedya.unikazani;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.HapticFeedbackConstants;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Adapter;
 import android.widget.AdapterView;
-import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
 import com.beceriklimedya.unikazani.CustomAdapter.SearchAdapter;
-import com.beceriklimedya.unikazani.JSON.SearchActionJSON;
 import com.beceriklimedya.unikazani.JSON.SearchJSON;
 
 import org.json.JSONArray;
@@ -47,7 +36,6 @@ public class Search extends AppCompatActivity{
     private SearchAdapter searchAdapter;
     private String userId;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,7 +53,16 @@ public class Search extends AppCompatActivity{
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                action(SearchUniId.get(position), userId, SearchUniStatus.get(position));
+                String sec = SearchUniId.get(position);
+                String sec2 = SearchUniStatus.get(position);
+                String sec3 = SearchUniName.get(position);
+
+                Intent follow = new Intent(Search.this,UniversityProfile.class);
+                follow.putExtra("searchId",sec);
+                follow.putExtra("searchStatus",sec2);
+                follow.putExtra("searchName",sec3);
+                startActivity(follow);
+
             }
         });
 
@@ -74,41 +71,9 @@ public class Search extends AppCompatActivity{
             public void onClick(View v) {
                 Search.super.onBackPressed();
 
-                startActivity(new Intent(Search.this,MainScreen.class));
                 overridePendingTransition(R.anim.geri1,R.anim.geri2);
             }
         });
-    }
-
-    public void action (String uniId, String userId, final String status)
-    {
-        Response.Listener<String> responselistener = new Response.Listener<String>()
-        {
-            @Override
-            public void onResponse(String response) {
-                try {
-
-                    JSONObject jsonresponse = new JSONObject(response);
-                    Log.i("yaz",response);
-                    Integer error = jsonresponse.getInt("error");
-
-                    if (error == 0)
-                    {
-                        fill();
-                    }
-
-                }
-                catch (JSONException e)
-                {
-                    e.printStackTrace();
-                }
-            }
-
-        };
-
-        SearchActionJSON loginrequest = new SearchActionJSON(userId,uniId,responselistener);
-        RequestQueue queue = Volley.newRequestQueue(Search.this);
-        queue.add(loginrequest);
     }
 
     private void fill()
@@ -131,7 +96,7 @@ public class Search extends AppCompatActivity{
                         SearchUniStatus.add(i, status.get(i).toString());
                     }
 
-                    searchAdapter = new SearchAdapter(Search.this, SearchUniName, SearchUniStatus, SearchUniId);
+                    searchAdapter = new SearchAdapter(Search.this, SearchUniName);
                     searchList.setAdapter(searchAdapter);
                 }
                 catch (JSONException e)
@@ -150,8 +115,6 @@ public class Search extends AppCompatActivity{
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-
-        startActivity(new Intent(Search.this,MainScreen.class));
         overridePendingTransition(R.anim.geri1,R.anim.geri2);
     }
 

@@ -29,8 +29,8 @@
         android:id="@+id/main_profile"
         android:layout_width="35dp"
         android:layout_height="35dp"
-        android:layout_marginLeft="32dp"
-        android:layout_marginStart="32dp"
+        android:layout_marginLeft="24dp"
+        android:layout_marginStart="24dp"
         android:background="@android:color/transparent"
         android:scaleType="fitCenter"
         app:layout_constraintBottom_toBottomOf="@+id/main_bottomBar"
@@ -42,8 +42,8 @@
         android:id="@+id/main_notification"
         android:layout_width="35dp"
         android:layout_height="35dp"
-        android:layout_marginLeft="32dp"
-        android:layout_marginStart="32dp"
+        android:layout_marginLeft="24dp"
+        android:layout_marginStart="24dp"
         android:background="@android:color/transparent"
         android:scaleType="fitCenter"
         app:layout_constraintBottom_toBottomOf="@+id/main_bottomBar"
@@ -58,8 +58,9 @@
         android:background="@android:color/transparent"
         android:scaleType="fitCenter"
         app:layout_constraintBottom_toBottomOf="@+id/main_bottomBar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/main_bottomBar"
+        app:layout_constraintHorizontal_bias="0.42"
+        app:layout_constraintStart_toStartOf="@+id/main_bottomBar"
         app:layout_constraintTop_toTopOf="@+id/main_bottomBar"
         app:srcCompat="@drawable/ic_add_circle_black_24dp" />
 
@@ -67,8 +68,8 @@
         android:id="@+id/main_search"
         android:layout_width="35dp"
         android:layout_height="35dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginRight="32dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginRight="24dp"
         android:background="@android:color/transparent"
         android:scaleType="fitCenter"
         app:layout_constraintBottom_toBottomOf="@+id/main_bottomBar"
@@ -80,8 +81,8 @@
         android:id="@+id/main_home"
         android:layout_width="35dp"
         android:layout_height="35dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginRight="32dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginRight="24dp"
         android:background="@android:color/transparent"
         android:scaleType="fitCenter"
         app:layout_constraintBottom_toBottomOf="@+id/main_bottomBar"
@@ -91,7 +92,7 @@
 
 
     <ImageButton
-        android:id="@+id/imageButton2"
+        android:id="@+id/mainfilter3"
         android:layout_width="35dp"
         android:layout_height="35dp"
         android:layout_marginLeft="16dp"
@@ -100,12 +101,12 @@
         android:background="@drawable/yuvarlak2"
         android:padding="7dp"
         android:scaleType="fitCenter"
-        app:layout_constraintStart_toEndOf="@+id/imageButton"
+        app:layout_constraintStart_toEndOf="@+id/mainfilter2"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_laugh" />
 
     <ImageButton
-        android:id="@+id/imageButton4"
+        android:id="@+id/mainfilter1"
         android:layout_width="35dp"
         android:layout_height="35dp"
         android:layout_marginEnd="16dp"
@@ -114,12 +115,12 @@
         android:background="@drawable/yuvarlak2"
         android:padding="5dp"
         android:scaleType="centerInside"
-        app:layout_constraintEnd_toStartOf="@+id/imageButton"
+        app:layout_constraintEnd_toStartOf="@+id/mainfilter2"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/love" />
 
     <ImageButton
-        android:id="@+id/imageButton"
+        android:id="@+id/mainfilter2"
         android:layout_width="35dp"
         android:layout_height="35dp"
         android:layout_marginEnd="8dp"
@@ -130,6 +131,7 @@
         android:background="@drawable/yuvarlak2"
         android:scaleType="centerInside"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.42"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_open_book" />
@@ -148,5 +150,30 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/main_topBar" />
+
+    <ImageButton
+        android:id="@+id/mainfilter4"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/yuvarlak2"
+        app:layout_constraintStart_toEndOf="@+id/mainfilter3"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_shuffle_black_24dp" />
+
+    <ImageButton
+        android:id="@+id/maintop10"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_marginLeft="24dp"
+        android:layout_marginStart="24dp"
+        android:background="@android:color/transparent"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/main_profile"
+        app:layout_constraintTop_toTopOf="@+id/main_bottomBar"
+        app:srcCompat="@drawable/ic_icon" />
 
 </android.support.constraint.ConstraintLayout>

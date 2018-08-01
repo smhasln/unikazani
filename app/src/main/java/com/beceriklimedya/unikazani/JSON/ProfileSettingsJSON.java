@@ -19,7 +19,7 @@ public class ProfileSettingsJSON extends StringRequest {
         params.put("id", userId);
         params.put("image", image);
         params.put("birthday", birthday);
-        params.put("university", university);
+        params.put("university_id", university);
         params.put("sex", sex);
     }
 

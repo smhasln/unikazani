@@ -20,7 +20,6 @@
         android:layout_width="125dp"
         android:layout_height="125dp"
         android:layout_marginTop="8dp"
-        android:src="@drawable/deneme"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -73,27 +72,13 @@
         app:layout_constraintStart_toEndOf="@+id/settings3"
         app:layout_constraintTop_toBottomOf="@+id/settingsTop" />
 
-    <Spinner
-        android:id="@+id/settingsUni"
-        android:layout_width="0dp"
-        android:layout_height="45dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="32dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:padding="10dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/settings3"
-        app:layout_constraintTop_toBottomOf="@+id/settingsFemale" />
-
     <RadioButton
         android:id="@+id/settingsFemale"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="Kadın"
-        app:layout_constraintStart_toStartOf="@+id/settingsUni"
+        app:layout_constraintStart_toStartOf="@+id/settingsBirthday"
         app:layout_constraintTop_toBottomOf="@+id/settingsBirthday" />
 
     <RadioButton
@@ -148,30 +133,51 @@
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/settingsApply"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:layout_marginBottom="16dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginRight="32dp"
         android:clickable="true"
         app:backgroundTint="@color/colorPrimaryDark"
-        app:fabSize="normal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/ic_check_black_24dp" />
 
     <Button
         android:id="@+id/logout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
         android:layout_marginEnd="32dp"
+        android:layout_marginLeft="32dp"
         android:layout_marginRight="32dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginStart="32dp"
         android:background="@drawable/feed_item_corner_1"
         android:text="Oturumu kapat"
         android:textColor="@android:color/white"
         android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/settingsApply"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/settingsUni"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="32dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="32dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="24dp"
+        android:background="@drawable/corner_1"
+        android:gravity="center"
+        android:padding="5dp"
+        android:text="Yükleniyor..."
+        android:textColor="@android:color/white"
+        android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/settingsUni"
-        app:layout_constraintTop_toBottomOf="@+id/settingsUni" />
+        app:layout_constraintStart_toEndOf="@+id/settings3"
+        app:layout_constraintTop_toBottomOf="@+id/settingsFemale" />
 
 </android.support.constraint.ConstraintLayout>

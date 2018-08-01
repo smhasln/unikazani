@@ -108,4 +108,11 @@ public class Login extends AppCompatActivity {
         RequestQueue queue = Volley.newRequestQueue(Login.this);
         queue.add(loginrequest);
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        overridePendingTransition(R.anim.geri1,R.anim.geri2);
+    }
 }

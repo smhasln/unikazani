@@ -27,6 +27,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
@@ -35,6 +36,7 @@ import com.android.volley.toolbox.Volley;
 import com.beceriklimedya.unikazani.CustomAdapter.SearchAdapter;
 import com.beceriklimedya.unikazani.JSON.AddJSON;
 import com.beceriklimedya.unikazani.JSON.SearchJSON;
+import com.kaopiz.kprogresshud.KProgressHUD;
 import com.mlsdev.rximagepicker.RxImagePicker;
 import com.mlsdev.rximagepicker.Sources;
 import com.squareup.picasso.Picasso;
@@ -80,6 +82,8 @@ public class Add extends AppCompatActivity {
     private String userId;
     private String profile;
 
+    private TextView add4;
+
     private int PICK_IMAGE_REQUEST = 1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,6 +93,7 @@ public class Add extends AppCompatActivity {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         userId = preferences.getString("userId", "N/A");
         profile = preferences.getString("profile", "N/A");
+        String auth = preferences.getString("auth", "N/A");
 
         addProfile = findViewById(R.id.addProfile);
         addText = findViewById(R.id.addText);
@@ -103,12 +108,24 @@ public class Add extends AppCompatActivity {
         addCategory3 = findViewById(R.id.addCategory3);
         addCategory4 = findViewById(R.id.addCategory4);
         addDelete = findViewById(R.id.addDelete);
+        add4 = findViewById(R.id.add4);
 
         getUni();
 
         Picasso.get()
                 .load("http://www.unikazani.com/json/upload/" + profile + ".jpg")
                 .into(addProfile);
+
+        if (auth.equals("1") || auth.equals("2"))
+        {
+            addCategory4.setVisibility(View.VISIBLE);
+            add4.setVisibility(View.VISIBLE);
+        }
+        else
+        {
+            addCategory4.setVisibility(View.GONE);
+            add4.setVisibility(View.GONE);
+        }
 
         addCategory1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -293,8 +310,12 @@ public class Add extends AppCompatActivity {
 
     private void share()
     {
+        final KProgressHUD hud = KProgressHUD.create(this)
+                .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
+                .setCancellable(false)
+                .setLabel("Paylaşılıyor");
 
-        final ProgressDialog progress = ProgressDialog.show(Add.this, "Paylaşılıyor...", "", true);
+        hud.show();
 
         Response.Listener<String> responselistener = new Response.Listener<String>()
         {
@@ -306,9 +327,9 @@ public class Add extends AppCompatActivity {
 
                     Integer error = jsonresponse.getInt("error");
 
+                    hud.dismiss();
                     if (error == 0)
                     {
-                        progress.dismiss();
                         Add.super.onBackPressed();
                         overridePendingTransition(R.anim.geri1,R.anim.geri2);
                     }
@@ -364,7 +385,7 @@ public class Add extends AppCompatActivity {
 
         };
 
-        SearchJSON loginrequest = new SearchJSON(userId,"1",responselistener);
+        SearchJSON loginrequest = new SearchJSON(userId,"1","99",responselistener);
         RequestQueue queue = Volley.newRequestQueue(Add.this);
         queue.add(loginrequest);
     }

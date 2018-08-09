@@ -16,6 +16,7 @@ import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
 import com.beceriklimedya.unikazani.JSON.LoginJSON;
 import com.beceriklimedya.unikazani.JSON.RegisterJSON;
+import com.kaopiz.kprogresshud.KProgressHUD;
 import com.tapadoo.alerter.Alerter;
 
 import org.json.JSONException;
@@ -51,8 +52,13 @@ public class Register extends AppCompatActivity {
     private void register(String name, final String userName, final String password, String mail, String token)
     {
 
-        final ProgressDialog progress = ProgressDialog.show(Register.this, "Oturum açma", "Lütfen bekleyiniz.", true);
+        final KProgressHUD hud = KProgressHUD.create(this)
+                .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
+                .setCancellable(false)
+                .setLabel("Yükleniyor")
+                .setDetailsLabel("Kayıt yapılıyor...");
 
+        hud.show();
         Response.Listener<String> responselistener = new Response.Listener<String>()
         {
             @Override
@@ -61,7 +67,7 @@ public class Register extends AppCompatActivity {
                 try {
 
                     JSONObject jsonresponse = new JSONObject(response);
-                    progress.dismiss();
+                    hud.dismiss();
 
                     Integer error = jsonresponse.getInt("error");
                     Log.i("yaz",response);
@@ -70,14 +76,12 @@ public class Register extends AppCompatActivity {
 
                         String userId = jsonresponse.getString("id");
                         String auth = jsonresponse.getString("auth");
-                        String profile = jsonresponse.getString("profile");
 
                         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
                         SharedPreferences.Editor editor = preferences.edit();
                         editor.putString("userId", userId);
                         editor.putString("remember", "1");
                         editor.putString("auth", auth);
-                        editor.putString("profile", profile);
                         editor.putString("username", userName);
                         editor.putString("password", password);
                         editor.commit();

@@ -74,7 +74,6 @@ public class MainAdapter extends BaseAdapter {
         View RowView = layoutInflater.inflate(R.layout.row_main,null);
 
         TextView txtName = RowView.findViewById(R.id.feed_item_name);
-        TextView txtCategory = RowView.findViewById(R.id.feed_item_category);
         TextView txtTime = RowView.findViewById(R.id.feed_item_time);
         TextView txtText = RowView.findViewById(R.id.feed_item_text);
         ImageView imgImage = RowView.findViewById(R.id.feed_item_image);
@@ -83,7 +82,6 @@ public class MainAdapter extends BaseAdapter {
         CircleImageView imgProfile = RowView.findViewById(R.id.feed_item_profile);
 
         txtName.setText(MainArrayName.get(position));
-        txtCategory.setText(MainArrayCategory.get(position));
         txtTime.setText(MainArrayTime.get(position));
         txtText.setText(MainArrayText.get(position));
         txtLike.setText(MainArrayLike.get(position));

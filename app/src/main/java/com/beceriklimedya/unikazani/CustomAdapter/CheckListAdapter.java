@@ -8,16 +8,16 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.beceriklimedya.unikazani.Editor;
 import com.beceriklimedya.unikazani.MainScreen;
 import com.beceriklimedya.unikazani.R;
-import com.beceriklimedya.unikazani.UniversityProfile;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class UniversityListAdapter extends BaseAdapter {
+public class CheckListAdapter extends BaseAdapter {
 
     private ArrayList<String> MainArrayName;
     private ArrayList<String> MainArrayCategory;
@@ -31,15 +31,15 @@ public class UniversityListAdapter extends BaseAdapter {
     LayoutInflater layoutInflater = null;
 
 
-    public UniversityListAdapter(UniversityProfile universityProfile,
-                                 ArrayList<String> name,
-                                 ArrayList<String> category,
-                                 ArrayList<String> time,
-                                 ArrayList<String> text,
-                                 ArrayList<String> image,
-                                 ArrayList<String> profile,
-                                 ArrayList<String> like,
-                                 ArrayList<String> hashtag)
+    public CheckListAdapter(Editor editor,
+                            ArrayList<String> name,
+                            ArrayList<String> category,
+                            ArrayList<String> time,
+                            ArrayList<String> text,
+                            ArrayList<String> image,
+                            ArrayList<String> profile,
+                            ArrayList<String> like,
+                            ArrayList<String> hashtag)
     {
         this.MainArrayName = name;
         this.MainArrayCategory = category;
@@ -51,7 +51,7 @@ public class UniversityListAdapter extends BaseAdapter {
         this.MainArrayProfile = profile;
 
 
-        layoutInflater = (LayoutInflater)universityProfile.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        layoutInflater = (LayoutInflater)editor.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
     @Override

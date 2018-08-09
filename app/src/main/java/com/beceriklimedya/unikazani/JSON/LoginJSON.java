@@ -22,6 +22,7 @@ public class LoginJSON extends StringRequest {
         params.put("username", userName);
         params.put("password", password);
         params.put("token", token);
+        params.put("mobile","1");
     }
 
     @Override

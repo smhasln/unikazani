@@ -1,28 +1,25 @@
 package com.beceriklimedya.unikazani;
 
-import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
-import android.widget.ImageButton;
+import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
+import com.beceriklimedya.unikazani.CustomAdapter.CheckListAdapter;
 import com.beceriklimedya.unikazani.CustomAdapter.MainAdapter;
-import com.beceriklimedya.unikazani.CustomAdapter.UniversityListAdapter;
+import com.beceriklimedya.unikazani.JSON.CheckJSON;
+import com.beceriklimedya.unikazani.JSON.CheckListJSON;
 import com.beceriklimedya.unikazani.JSON.MainJSON;
-import com.beceriklimedya.unikazani.JSON.SearchActionJSON;
-import com.beceriklimedya.unikazani.JSON.UniShareJSON;
 import com.kaopiz.kprogresshud.KProgressHUD;
 import com.tapadoo.alerter.Alerter;
 
@@ -32,7 +29,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class UniversityProfile extends AppCompatActivity {
+public class Editor extends AppCompatActivity {
 
     private ArrayList<String> MainArrayName = new ArrayList<>();
     private ArrayList<String> MainArrayCategory = new ArrayList<>();
@@ -45,75 +42,57 @@ public class UniversityProfile extends AppCompatActivity {
     private ArrayList<String> MainArrayId = new ArrayList<>();
     private ArrayList<String> MainArrayUserId = new ArrayList<>();
 
-    private FloatingActionButton followBtn;
-    private ListView shareList;
-
     private String userId;
-    private String uni_id;
-    private TextView count;
+    private ListView listView;
+
+    private String shareId;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_university_profile);
+        setContentView(R.layout.activity_editor);
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         userId = preferences.getString("userId", "N/A");
 
-        Intent follow = getIntent();
-        uni_id = follow.getStringExtra("searchId");
-        final String searchStatus = follow.getStringExtra("searchStatus");
-        final String searchName = follow.getStringExtra("searchName");
+        listView = findViewById(R.id.editor_list);
 
-        Log.i("yaz",uni_id);
-        TextView title = findViewById(R.id.txtunititle);
+        fill();
 
-        title.setText(searchName);
-
-        shareList = findViewById(R.id.uni_share_list);
-        followBtn = findViewById(R.id.uni_follow);
-        count = findViewById(R.id.txtcount);
-
-        ImageButton back = findViewById(R.id.uniprofileback);
-
-        back.setOnClickListener(new View.OnClickListener() {
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onClick(View v) {
-                UniversityProfile.super.onBackPressed();
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                shareId = MainArrayId.get(position);
+
+                AlertDialog.Builder builder1 = new AlertDialog.Builder(Editor.this);
+                builder1.setTitle("Editör");
+                builder1.setMessage("Paylaşım Ayarları");
+                builder1.setCancelable(true);
+                builder1.setPositiveButton("Yayına al",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                apply();
+                            }
+                        });
+                builder1.setNegativeButton("Vazgeç",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+
+
+                            }
+                        });
+                AlertDialog alert11 = builder1.create();
+                alert11.show();
             }
         });
 
-        if (searchStatus.equals("1"))
-        {
-            fill();
-        }
-        else if (searchStatus.equals("0"))
-        {
-            Alerter.create(UniversityProfile.this)
-                    .setBackgroundColorRes(android.R.color.holo_blue_dark)
-                    .setTitle("Bilgi")
-                    .setText("Gönderileri görmek için takibe al!")
-                    .enableProgress(true)
-                    .setProgressColorRes(android.R.color.white)
-                    .show();
-        }
-
-        followBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                action(uni_id, userId);
-            }
-        });
     }
 
-
-    public void action (String uniId, String userId)
+    private void apply()
     {
         final KProgressHUD hud = KProgressHUD.create(this)
                 .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
                 .setCancellable(false)
-                .setLabel("Yükleniyor")
-                .setDetailsLabel("İşlem yapılıyor...");
+                .setLabel("İşleniyor");
 
         hud.show();
 
@@ -131,32 +110,16 @@ public class UniversityProfile extends AppCompatActivity {
                     if (error == 0)
                     {
 
-                        shareList.setVisibility(View.VISIBLE);
-                        fill();
-                    }
-                    else if (error == 1)
-                    {
-                        MainArrayName.clear();
-                        MainArrayTime.clear();
-                        MainArrayText.clear();
-                        MainArrayImage.clear();
-                        MainArrayProfile.clear();
-                        MainArrayLike.clear();
-                        MainArrayHashTag.clear();
-                        MainArrayId.clear();
-                        MainArrayUserId.clear();
-
-                        shareList.setVisibility(View.GONE);
-
-                        Alerter.create(UniversityProfile.this)
+                        Alerter.create(Editor.this)
                                 .setBackgroundColorRes(android.R.color.holo_blue_dark)
                                 .setTitle("Bilgi")
-                                .setText("Takipten çıkıldı!")
+                                .setText("Paylaşım yayında!")
                                 .enableProgress(true)
                                 .setProgressColorRes(android.R.color.white)
                                 .show();
-                    }
 
+                        fill();
+                    }
                 }
                 catch (JSONException e)
                 {
@@ -166,34 +129,33 @@ public class UniversityProfile extends AppCompatActivity {
 
         };
 
-        SearchActionJSON loginrequest = new SearchActionJSON(userId,uniId,responselistener);
-        RequestQueue queue = Volley.newRequestQueue(UniversityProfile.this);
+        CheckJSON loginrequest = new CheckJSON(userId,shareId,responselistener);
+        RequestQueue queue = Volley.newRequestQueue(Editor.this);
         queue.add(loginrequest);
-
 
     }
 
-
     private void fill()
     {
+
         final KProgressHUD hud = KProgressHUD.create(this)
                 .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
                 .setCancellable(false)
                 .setLabel("Yükleniyor")
-                .setDetailsLabel("Bilgiler getiriliyor...");
+                .setDetailsLabel("Onay bekleyenler getiriliyor...");
 
         hud.show();
 
         MainArrayName.clear();
+        MainArrayCategory.clear();
         MainArrayTime.clear();
-        MainArrayText.clear();
+        MainArrayText.clear();;
         MainArrayImage.clear();
         MainArrayProfile.clear();
         MainArrayLike.clear();
         MainArrayHashTag.clear();
         MainArrayId.clear();
         MainArrayUserId.clear();
-
 
         Response.Listener<String> responselistener = new Response.Listener<String>()
         {
@@ -202,7 +164,6 @@ public class UniversityProfile extends AppCompatActivity {
                 try {
 
                     JSONObject jsonresponse = new JSONObject(response);
-
 
                     JSONArray name = jsonresponse.getJSONArray("name");
                     JSONArray category = jsonresponse.getJSONArray("category");
@@ -228,8 +189,7 @@ public class UniversityProfile extends AppCompatActivity {
                         MainArrayUserId.add(i,userid.get(i).toString());
                     }
 
-                    count.setText(MainArrayId.size() + " PAYLAŞIM");
-                    shareList.setAdapter(new UniversityListAdapter(UniversityProfile.this,
+                    listView.setAdapter(new CheckListAdapter(Editor.this,
                             MainArrayName,
                             MainArrayCategory,
                             MainArrayTime,
@@ -248,8 +208,8 @@ public class UniversityProfile extends AppCompatActivity {
 
         };
 
-        UniShareJSON loginrequest = new UniShareJSON(uni_id,responselistener);
-        RequestQueue queue = Volley.newRequestQueue(UniversityProfile.this);
+        CheckListJSON loginrequest = new CheckListJSON(userId,responselistener);
+        RequestQueue queue = Volley.newRequestQueue(Editor.this);
         queue.add(loginrequest);
 
     }
@@ -257,5 +217,6 @@ public class UniversityProfile extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+        overridePendingTransition(R.anim.geri1,R.anim.geri2);
     }
 }

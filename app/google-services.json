@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "708052421897",
+    "firebase_url": "https://unikazani.firebaseio.com",
+    "project_id": "unikazani",
+    "storage_bucket": "unikazani.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:708052421897:android:f589065f0686a694",
+        "android_client_info": {
+          "package_name": "com.beceriklimedya.unikazani"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "708052421897-q1to632l37ijdt5874dkacmk328cpe7d.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDDgfLC61MJnlG5WiaEkDl8QJqeo7a3AGA"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

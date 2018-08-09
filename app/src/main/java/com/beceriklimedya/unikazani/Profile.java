@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -20,6 +21,7 @@ import com.beceriklimedya.unikazani.CustomAdapter.MainAdapter;
 import com.beceriklimedya.unikazani.CustomAdapter.ProfileListAdapter;
 import com.beceriklimedya.unikazani.JSON.MainJSON;
 import com.beceriklimedya.unikazani.JSON.ProfileJSON;
+import com.kaopiz.kprogresshud.KProgressHUD;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
@@ -64,6 +66,10 @@ public class Profile extends AppCompatActivity {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         userId = preferences.getString("userId", "N/A");
 
+        final String auth = preferences.getString("auth", "0");
+
+        Log.i("yaz",auth);
+
         Intent go = getIntent();
         comId = go.getStringExtra("feedUserId");
 
@@ -78,6 +84,15 @@ public class Profile extends AppCompatActivity {
         profileBack = findViewById(R.id.profile_back);
         profileList = findViewById(R.id.profile_list);
         profileAdmin = findViewById(R.id.profile_admin);
+
+        if (auth.equals("2") || auth.equals("1"))
+        {
+            profileAdmin.setVisibility(View.VISIBLE);
+        }
+        else
+        {
+            profileAdmin.setVisibility(View.GONE);
+        }
 
         profileSettings.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -98,7 +113,14 @@ public class Profile extends AppCompatActivity {
         profileAdmin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(Profile.this,Admin.class));
+                if (auth.equals("2") )
+                {
+                    startActivity(new Intent(Profile.this,Admin.class));
+                }
+                else if (auth.equals("1"))
+                {
+                    startActivity(new Intent(Profile.this,Editor.class));
+                }
             }
         });
 
@@ -113,8 +135,23 @@ public class Profile extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onResume()
+    {  // After a pause OR at startup
+        super.onResume();
+        fill();
+    }
+
     private void fill()
     {
+        final KProgressHUD hud = KProgressHUD.create(this)
+                .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
+                .setCancellable(false)
+                .setLabel("Yükleniyor")
+                .setDetailsLabel("Bilgiler getiriliyor...");
+
+        hud.show();
+
 
         Response.Listener<String> responselistener = new Response.Listener<String>()
         {
@@ -124,7 +161,6 @@ public class Profile extends AppCompatActivity {
 
                     JSONObject jsonresponse = new JSONObject(response);
 
-                    Log.i("yaz",response);
                     String warning = jsonresponse.getString("warning");
 
                     // BAŞKASI
@@ -146,8 +182,8 @@ public class Profile extends AppCompatActivity {
                     JSONArray image = jsonresponse.getJSONArray("image");
                     JSONArray profile = jsonresponse.getJSONArray("profile");
                     JSONArray likes = jsonresponse.getJSONArray("likes");
-                    //JSONArray university = jsonresponse.getJSONArray("university");
-                    //JSONArray id = jsonresponse.getJSONArray("id");
+                    JSONArray university = jsonresponse.getJSONArray("university");
+                    JSONArray id = jsonresponse.getJSONArray("id");
 
                     String user_age = jsonresponse.getString("birthday");
                     String user_name = jsonresponse.getString("user_name");
@@ -156,9 +192,25 @@ public class Profile extends AppCompatActivity {
                     String user_share = jsonresponse.getString("share_rows");
                     String user_photo = jsonresponse.getString("photo");
 
-                    profileAge.setText(user_age);
+                    if (user_age.equals("null"))
+                    {
+                        profileAge.setText("Belirtilmemiş");
+                    }
+                    else
+                    {
+                        profileAge.setText(user_age);
+                    }
+
+                    if (user_uni.equals("null"))
+                    {
+                        profileUni.setText("Belirtilmemiş");
+                    }
+                    else
+                    {
+                        profileUni.setText(user_uni);
+                    }
+
                     profileName.setText(user_name);
-                    profileUni.setText(user_uni);
                     profileScore.setText(user_score + " puan");
                     profileShare.setText(user_share + " paylaşım");
 
@@ -174,8 +226,8 @@ public class Profile extends AppCompatActivity {
                         MainArrayImage.add(i, image.get(i).toString());
                         MainArrayProfile.add(i, profile.get(i).toString());
                         MainArrayLike.add(i, likes.get(i).toString());
-                        MainArrayHashTag.add(i, "ERROR");
-                        MainArrayId.add(i, "ERROR");
+                        MainArrayHashTag.add(i, university.get(i).toString());
+                        MainArrayId.add(i,id.get(i).toString());
                     }
 
                     profileList.setAdapter(new ProfileListAdapter(Profile.this,
@@ -186,6 +238,8 @@ public class Profile extends AppCompatActivity {
                             MainArrayImage,
                             MainArrayProfile,
                             MainArrayLike,MainArrayHashTag));
+
+                    hud.dismiss();
                 }
                 catch (JSONException e)
                 {

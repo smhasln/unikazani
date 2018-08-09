@@ -2,6 +2,7 @@ package com.beceriklimedya.unikazani;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ListView;
 
 import com.android.volley.RequestQueue;
@@ -11,6 +12,7 @@ import com.beceriklimedya.unikazani.CustomAdapter.PersonelAdapter;
 import com.beceriklimedya.unikazani.CustomAdapter.Top10Adapter;
 import com.beceriklimedya.unikazani.JSON.PersonelJSON;
 import com.beceriklimedya.unikazani.JSON.Top10JSON;
+import com.kaopiz.kprogresshud.KProgressHUD;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -39,6 +41,15 @@ public class PersonelList extends AppCompatActivity {
 
     private void fill()
     {
+
+        final KProgressHUD hud = KProgressHUD.create(this)
+                .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
+                .setCancellable(false)
+                .setLabel("Yükleniyor")
+                .setDetailsLabel("Kadro getiriliyor...");
+
+        hud.show();
+
         Response.Listener<String> responselistener = new Response.Listener<String>()
         {
             @Override
@@ -47,7 +58,7 @@ public class PersonelList extends AppCompatActivity {
 
                     JSONObject jsonresponse = new JSONObject(response);
 
-                    JSONArray name = jsonresponse.getJSONArray("username");
+                    JSONArray name = jsonresponse.getJSONArray("user_name");
                     JSONArray photo = jsonresponse.getJSONArray("image");
                     JSONArray auth = jsonresponse.getJSONArray("auth");
                     JSONArray uni = jsonresponse.getJSONArray("university_name");
@@ -61,6 +72,8 @@ public class PersonelList extends AppCompatActivity {
                     }
 
                     listView.setAdapter(new PersonelAdapter(PersonelList.this, names,photos,auths,unis));
+
+                    hud.dismiss();
                 }
                 catch (JSONException e)
                 {

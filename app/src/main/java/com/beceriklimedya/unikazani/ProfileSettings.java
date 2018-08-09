@@ -24,6 +24,7 @@ import android.widget.ImageButton;
 import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -31,6 +32,7 @@ import com.android.volley.toolbox.Volley;
 import com.beceriklimedya.unikazani.JSON.ProfileSetJSON;
 import com.beceriklimedya.unikazani.JSON.ProfileSettingsJSON;
 import com.beceriklimedya.unikazani.JSON.SearchJSON;
+import com.kaopiz.kprogresshud.KProgressHUD;
 import com.mlsdev.rximagepicker.RxImagePicker;
 import com.mlsdev.rximagepicker.Sources;
 import com.squareup.picasso.Picasso;
@@ -81,7 +83,6 @@ public class ProfileSettings extends AppCompatActivity {
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         userId = preferences.getString("userId", "N/A");
-        profile = preferences.getString("profile", "N/A");
 
         Button logout = findViewById(R.id.logout);
         settingsApply = findViewById(R.id.settingsApply);
@@ -96,12 +97,6 @@ public class ProfileSettings extends AppCompatActivity {
 
         getUni();
         fill();
-
-
-        Picasso.get()
-                .load("http://www.unikazani.com/json/upload/" + profile + ".jpg")
-                .into(settingsPhoto);
-
 
         settingsChange.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -176,6 +171,7 @@ public class ProfileSettings extends AppCompatActivity {
                 SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
                 SharedPreferences.Editor editor = preferences.edit();
                 editor.putString("userId", "");
+                editor.remove("remember");
                 editor.putString("remember", "0");
                 editor.putString("auth", "");
                 editor.putString("username", "");
@@ -281,6 +277,15 @@ public class ProfileSettings extends AppCompatActivity {
 
     private void fill()
     {
+
+        final KProgressHUD hud = KProgressHUD.create(this)
+                .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
+                .setCancellable(false)
+                .setLabel("Yükleniyor")
+                .setDetailsLabel("Bilgiler getiriliyor...");
+
+        hud.show();
+
         Response.Listener<String> responselistener = new Response.Listener<String>()
         {
             @Override
@@ -293,8 +298,18 @@ public class ProfileSettings extends AppCompatActivity {
                     String sex = jsonresponse.getString("sex");
                     selected_id = jsonresponse.getString("university_id");
                     uniName = jsonresponse.getString("university_name");
+                    profile = jsonresponse.getString("photo");
 
-                    settingsUni.setText(uniName);
+                    if (uniName.equals("null"))
+                    {
+
+                        settingsUni.setText("Belirtilmemiş");
+                    }
+                    else
+                    {
+
+                        settingsUni.setText(uniName);
+                    }
                     settingsBirthday.setText(birthday);
 
                     if (sex.equals("1"))
@@ -305,6 +320,15 @@ public class ProfileSettings extends AppCompatActivity {
                     {
                         settingsFemale.setChecked(true);
                     }
+
+                    Picasso.get()
+                            .load("http://www.unikazani.com/json/upload/" + profile + ".jpg")
+                            .into(settingsPhoto);
+
+                    img64 = profile;
+
+                    hud.dismiss();
+
                 }
                 catch (JSONException e)
                 {
@@ -321,6 +345,14 @@ public class ProfileSettings extends AppCompatActivity {
 
     private void apply()
     {
+
+        final KProgressHUD hud = KProgressHUD.create(this)
+                .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
+                .setCancellable(false)
+                .setLabel("Güncelleniyor");
+
+        hud.show();
+
         Response.Listener<String> responselistener = new Response.Listener<String>()
         {
             @Override
@@ -339,15 +371,10 @@ public class ProfileSettings extends AppCompatActivity {
                         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
                         SharedPreferences.Editor editor = preferences.edit();
                         editor.putString("profile", photo);
+
                         editor.commit();
 
-                        Alerter.create(ProfileSettings.this)
-                                .setBackgroundColorRes(android.R.color.holo_blue_dark)
-                                .setTitle("Başarılı")
-                                .setText("Kullanıcı bilgileri güncellendi!")
-                                .enableProgress(true)
-                                .setProgressColorRes(android.R.color.white)
-                                .show();
+                        hud.dismiss();
                     }
 
                 }
@@ -366,6 +393,7 @@ public class ProfileSettings extends AppCompatActivity {
 
     private void getUni()
     {
+
         Response.Listener<String> responselistener = new Response.Listener<String>()
         {
             @Override
@@ -383,7 +411,6 @@ public class ProfileSettings extends AppCompatActivity {
                     }
 
 
-
                 }
                 catch (JSONException e)
                 {
@@ -393,7 +420,7 @@ public class ProfileSettings extends AppCompatActivity {
 
         };
 
-        SearchJSON loginrequest = new SearchJSON(userId,"10",responselistener);
+        SearchJSON loginrequest = new SearchJSON(userId,"10","99",responselistener);
         RequestQueue queue = Volley.newRequestQueue(ProfileSettings.this);
         queue.add(loginrequest);
     }

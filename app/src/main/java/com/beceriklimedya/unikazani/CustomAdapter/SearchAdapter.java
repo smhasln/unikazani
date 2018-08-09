@@ -15,18 +15,21 @@ import android.widget.Toast;
 import com.beceriklimedya.unikazani.R;
 import com.beceriklimedya.unikazani.Search;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class SearchAdapter extends BaseAdapter {
 
     private ArrayList<String> searchUniName;
+    private ArrayList<String> searchUniCounts;
 
     LayoutInflater layoutInflater = null;
 
 
-    public SearchAdapter(Search search, ArrayList<String> name)
+    public SearchAdapter(Search search, ArrayList<String> name, ArrayList<String> counts)
     {
         this.searchUniName = name;
+        this.searchUniCounts = counts;
 
         layoutInflater = (LayoutInflater)search.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
@@ -53,7 +56,7 @@ public class SearchAdapter extends BaseAdapter {
         TextView txtName = RowView.findViewById(R.id.search_name);
         TextView txtText = RowView.findViewById(R.id.search_text);
 
-        txtText.setText("Üniversite profiline gitmek için tıkla");
+        txtText.setText(searchUniCounts.get(position) + " paylaşımı görmek için takip et!");
 
         txtName.setText(searchUniName.get(position));
 

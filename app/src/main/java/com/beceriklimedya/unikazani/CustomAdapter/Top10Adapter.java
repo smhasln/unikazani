@@ -65,7 +65,7 @@ public class Top10Adapter extends BaseAdapter {
         txtRank.setText(ranks.get(position));
         txtScore.setText(scores.get(position));
 
-        Picasso.get().load(profiles.get(position)).resize(100,100).into(image);
+        Picasso.get().load("http://www.unikazani.com/json/upload/" + profiles.get(position) + ".jpg").resize(100,100).into(image);
 
         return RowView;
     }

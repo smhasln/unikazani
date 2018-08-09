@@ -57,9 +57,21 @@ public class AdminListAdapter extends BaseAdapter {
         CircleImageView image = RowView.findViewById(R.id.admin_img);
 
         txtName.setText(names.get(position));
-        txtAuth.setText(auths.get(position));
 
-        Picasso.get().load(profiles.get(position)).resize(100,100).into(image);
+        if (auths.get(position).equals("0"))
+        {
+            txtAuth.setText("KULLANICI");
+        }
+        else if (auths.get(position).equals("1"))
+        {
+            txtAuth.setText("EDITOR");
+        }
+        else if (auths.get(position).equals("2"))
+        {
+            txtAuth.setText("ADMIN");
+        }
+
+        Picasso.get().load("http://www.unikazani.com/json/upload/" + profiles.get(position) + ".jpg").resize(100,100).into(image);
 
         return RowView;
     }

@@ -22,6 +22,18 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <service android:name="com.beceriklimedya.unikazani.MyFirebaseMessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+        <service android:name="com.beceriklimedya.unikazani.MyFirebaseInstanceIdService">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
+            </intent-filter>
+        </service>
+
         <activity android:name=".Search" />
         <activity android:name=".Notifications" />
         <activity android:name=".Profile" />
@@ -34,7 +46,8 @@
         <activity android:name=".Top10" />
         <activity android:name=".PersonelList" />
         <activity android:name=".Admin" />
-        <activity android:name=".Chat"></activity>
+        <activity android:name=".Chat" />
+        <activity android:name=".Editor"></activity>
     </application>
 
 </manifest>

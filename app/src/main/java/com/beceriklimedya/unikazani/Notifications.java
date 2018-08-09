@@ -16,6 +16,7 @@ import com.android.volley.toolbox.Volley;
 import com.beceriklimedya.unikazani.CustomAdapter.NotificationAdapter;
 import com.beceriklimedya.unikazani.JSON.NotificationJSON;
 import com.beceriklimedya.unikazani.JSON.SearchJSON;
+import com.kaopiz.kprogresshud.KProgressHUD;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -56,6 +57,15 @@ public class Notifications extends AppCompatActivity {
 
     private void getNoti()
     {
+
+        final KProgressHUD hud = KProgressHUD.create(this)
+                .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
+                .setCancellable(false)
+                .setLabel("Yükleniyor")
+                .setDetailsLabel("Bildirimler getiriliyor...");
+
+        hud.show();
+
         Response.Listener<String> responselistener = new Response.Listener<String>()
         {
             @Override
@@ -73,6 +83,8 @@ public class Notifications extends AppCompatActivity {
                     }
 
                     notificationList.setAdapter(new NotificationAdapter(Notifications.this, NotificationArrayTitle, NotificationArrayTime));
+
+                    hud.dismiss();
 
                 }
                 catch (JSONException e)

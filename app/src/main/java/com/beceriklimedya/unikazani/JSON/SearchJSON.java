@@ -12,12 +12,13 @@ public class SearchJSON extends StringRequest {
 
     private Map<String, String> params;
 
-    public SearchJSON(String userId,String control, Response.Listener<String> listener) {
+    public SearchJSON(String userId,String control,String data, Response.Listener<String> listener) {
         super(Method.POST, SEARCH_URL, listener, null);
         // İşlemler için kullanılacak veriler hazırlanır.
         params = new HashMap<>();
         params.put("control", control);
         params.put("id", userId);
+        params.put("data",data);
     }
 
     @Override

@@ -15,6 +15,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
 import com.beceriklimedya.unikazani.JSON.LoginJSON;
+import com.kaopiz.kprogresshud.KProgressHUD;
 import com.tapadoo.alerter.Alerter;
 
 import org.json.JSONException;
@@ -25,7 +26,7 @@ public class Login extends AppCompatActivity {
     private EditText txtUsername;
     private EditText txtPassword;
 
-    private String token = "";
+    private String token = "0";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,6 +35,9 @@ public class Login extends AppCompatActivity {
         txtUsername = findViewById(R.id.login_username);
         txtPassword = findViewById(R.id.login_password);
         Button btnLogin = findViewById(R.id.login_login);
+
+        SharedPreferences token_at = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        token = token_at.getString("token", "N/A");
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -46,7 +50,15 @@ public class Login extends AppCompatActivity {
 
     private void login(final String userName, final String password, String token)
     {
-        final ProgressDialog progress = ProgressDialog.show(Login.this, "Oturum açma", "Lütfen bekleyiniz.", true);
+
+        final KProgressHUD hud = KProgressHUD.create(this)
+                .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
+                .setCancellable(false)
+                .setLabel("Yükleniyor")
+                .setDetailsLabel("Giriş yapılıyor...");
+
+        hud.show();
+
         Response.Listener<String> responselistener = new Response.Listener<String>()
         {
             @Override
@@ -54,7 +66,7 @@ public class Login extends AppCompatActivity {
                 try {
 
                     JSONObject jsonresponse = new JSONObject(response);
-                    progress.dismiss();
+                    hud.dismiss();
 
                     Integer error = jsonresponse.getInt("error");
 
@@ -62,7 +74,7 @@ public class Login extends AppCompatActivity {
 
                         String userId = jsonresponse.getString("id");
                         String auth = jsonresponse.getString("auth");
-                        String profile = jsonresponse.getString("profile");
+                        String profile = jsonresponse.getString("photo");
 
                         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
                         SharedPreferences.Editor editor = preferences.edit();
@@ -74,16 +86,9 @@ public class Login extends AppCompatActivity {
                         editor.putString("password", password);
                         editor.commit();
 
-                        if (auth.equals("0")) {
-                            startActivity(new Intent(Login.this,MainScreen.class));
-                            overridePendingTransition(R.anim.ileri1,R.anim.ileri2);
-                        }
-                        else if (auth.equals("1")) {
-                            // EDITOR
-                        }
-                        else if (auth.equals("2")) {
-                            // ADMINISTRATOR
-                        }
+                        startActivity(new Intent(Login.this,MainScreen.class));
+                        overridePendingTransition(R.anim.ileri1,R.anim.ileri2);
+
                     }
                     else {
                         Alerter.create(Login.this)

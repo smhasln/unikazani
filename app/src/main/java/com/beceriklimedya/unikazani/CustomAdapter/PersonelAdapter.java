@@ -62,9 +62,11 @@ public class PersonelAdapter extends BaseAdapter {
 
         txtName.setText(names.get(position));
         txtUni.setText(unis.get(position));
+
         txtAuth.setText(auths.get(position));
 
-        Picasso.get().load(photos.get(position)).resize(100,100).into(image);
+
+        Picasso.get().load("http://www.unikazani.com/json/upload/" + photos.get(position) + ".jpg").resize(100,100).into(image);
 
         return RowView;
     }

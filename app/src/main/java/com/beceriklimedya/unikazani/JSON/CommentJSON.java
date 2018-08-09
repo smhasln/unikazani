@@ -12,11 +12,12 @@ public class CommentJSON extends StringRequest {
 
     private Map<String, String> params;
 
-    public CommentJSON(String feedId, Response.Listener<String> listener) {
+    public CommentJSON(String feedId, String userId,Response.Listener<String> listener) {
         super(Method.POST, LOGIN_URL, listener, null);
         // İşlemler için kullanılacak veriler hazırlanır.
         params = new HashMap<>();
         params.put("share_id", feedId);
+        params.put("id", userId);
     }
 
     @Override
